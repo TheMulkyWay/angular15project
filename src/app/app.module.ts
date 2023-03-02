@@ -6,6 +6,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ListEmployeesComponent } from './employee/list-employees.component';
 import { CreateEmployeeComponent } from './employee/create-employee.component';
 import { AppRoutingModule } from './app-routing.module';
+import { ReactiveFormsModule } from '@angular/forms';
+
 
 
 @NgModule({
@@ -18,7 +20,7 @@ import { AppRoutingModule } from './app-routing.module';
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
- 
+    ReactiveFormsModule,
     AppRoutingModule,
   ],
   providers: [],
