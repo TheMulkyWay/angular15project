@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-create-employee',
@@ -8,32 +8,43 @@ import { FormGroup, FormControl } from '@angular/forms';
 })
 export class CreateEmployeeComponent  implements OnInit{
 
-  public employeeForm!: FormGroup;
+public employeeForm!: FormGroup;
 
-constructor() {}
-
+constructor(private fb: FormBuilder) {}
 
 ngOnInit() {
-  this.employeeForm = new FormGroup(
-{
-fullName: new FormControl(),
-email: new FormControl(),
-skills : new FormGroup({
-  skillName: new FormControl,
-  experienceInYears: new FormControl,
-  proficiency: new FormControl
-  })
-}  );
+  this.employeeForm=this.fb.group({
+    fullName: ['', Validators.required],
+    email:[''],
+    skills: this.fb.group({
+    skillName: [''],
+    experienceInYears: [''],
+    proficiency: ['beginner']
+    })
+    });
+    }
  
-}
-
-
 onSubmit(){   
   console.log(this.employeeForm.touched);
   console.log(this.employeeForm.value);
   console.log(this.employeeForm.controls['fullName'].touched);
   console.log(this.employeeForm.get('fullName'));
   console.log(this.employeeForm);
+}
+
+
+onLoadData(){
+
+  this.employeeForm.setValue({
+    fullName: 'MulkyWay Tech',
+    email : 'mulkyway@gmail.com',
+    skills: {
+    skillName : 'C#',
+    experienceInYears : 5,
+    proficiency: 'beginner'
+    }
+        });
+  
 }
 
 
