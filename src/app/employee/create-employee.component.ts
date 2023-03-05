@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators ,AsyncValidator} from '@angular/forms';
 
 @Component({
   selector: 'app-create-employee',
@@ -10,18 +10,41 @@ export class CreateEmployeeComponent  implements OnInit{
 
 public employeeForm!: FormGroup;
 
+
+validationMessages ={
+  'fullname':{ 'required': 'Full Name is required', 'minlength' :'Must be more than 2 characters', 'maxlength': 'must be less than 24'},
+  'email':{'required':'Email is reqiured.'},
+  'skillName': { required: 'Skill Name is required.', },
+  'experinceInYears': {'required': 'Experience is required. ',},
+  'proficiency': {'required' : 'Proficiency is required.',},
+  };
+
+  formErrors={
+    'fullName':'',
+    'email': '',
+    'skillName': '',
+    'experienceInYears': '',
+    'proficiency': ''
+    };
+
 constructor(private fb: FormBuilder) {}
 
 ngOnInit() {
   this.employeeForm=this.fb.group({
-    fullName: ['', Validators.required],
-    email:[''],
+    fullName: ['', 
+    
+    Validators.required, Validators.minLength(2), Validators.maxLength(12)],
+    email:['', Validators.required],
     skills: this.fb.group({
-    skillName: [''],
-    experienceInYears: [''],
-    proficiency: ['beginner']
+    skillName: ['',Validators.required],
+    experienceInYears: ['',Validators.required],
+    proficiency: ['', Validators.required]
     })
     });
+ 
+ //   this.employeeForm.get('fullName')?.valueChanges.subscribe(value=> console.log(value));
+ // this.employeeForm.valueChanges.subscribe((value: any)=> console.log(JSON.stringify(value)));
+
     }
  
 onSubmit(){   
@@ -46,6 +69,28 @@ onLoadData(){
         });
   
 }
+
+
+logKeyValuePairs(group : FormGroup) : void
+{ console.log(Object.keys(group.controls).forEach((key: string)=>
+  {
+        const abstractControl = group.get(key);
+        if(abstractControl instanceof FormGroup){ this.logKeyValuePairs(abstractControl); }
+       else
+         { console.log('key =' + key + 'Value =' + abstractControl?.value); }
+  }
+  ))} 
+
+
+onLoadData2()
+{
+this.logKeyValuePairs(this.employeeForm)
+
+}
+
+
+
+
 
 
 }
