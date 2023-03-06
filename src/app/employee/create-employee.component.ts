@@ -11,15 +11,21 @@ export class CreateEmployeeComponent  implements OnInit{
 public employeeForm!: FormGroup;
 
 
-validationMessages ={
-  'fullname':{ 'required': 'Full Name is required', 'minlength' :'Must be more than 2 characters', 'maxlength': 'must be less than 24'},
-  'email':{'required':'Email is reqiured.'},
-  'skillName': { required: 'Skill Name is required.', },
+validationMessages : any ={
+  'fullname':{ 
+  'required': 'Full Name is required', 
+  'minlength' :'Must be more than 2 characters', 
+  'maxlength': 'must be less than 24'
+},
+  'email':{
+  'required':'Email is reqiured.'
+},
+'skillName': { required: 'Skill Name is required.', },
   'experinceInYears': {'required': 'Experience is required. ',},
   'proficiency': {'required' : 'Proficiency is required.',},
   };
 
-  formErrors={
+  formErrors: any={
     'fullName':'',
     'email': '',
     'skillName': '',
@@ -42,6 +48,10 @@ ngOnInit() {
     })
     });
  
+    this.employeeForm.valueChanges.subscribe((data=>{
+      this.logValidationErrors(this.employeeForm);
+    }))
+
  //   this.employeeForm.get('fullName')?.valueChanges.subscribe(value=> console.log(value));
  // this.employeeForm.valueChanges.subscribe((value: any)=> console.log(JSON.stringify(value)));
 
@@ -67,24 +77,33 @@ onLoadData(){
     proficiency: 'beginner'
     }
         });
-  
-}
+  }
 
-
-logKeyValuePairs(group : FormGroup) : void
+logValidationErrors(group : FormGroup=this.employeeForm) : void
 { console.log(Object.keys(group.controls).forEach((key: string)=>
   {
         const abstractControl = group.get(key);
-        if(abstractControl instanceof FormGroup){ this.logKeyValuePairs(abstractControl); }
-       else
-         { console.log('key =' + key + 'Value =' + abstractControl?.value); }
-  }
-  ))} 
+        if(abstractControl instanceof FormGroup)
+        { this.logValidationErrors(abstractControl); }
+       else { 
+        //    this.formErrors[key]=' ';
+            if(abstractControl  && !abstractControl.valid && abstractControl.touched || abstractControl?.dirty )
+                {
+                    const messages=this.validationMessages[key];
+                    console.log(messages);
+                    console.log(abstractControl.errors);
+  for(const errorKey in abstractControl.errors)
+      if(errorKey){ this.formErrors[key] +=messages[errorKey] + ' ';}
+    
+}}
+ }))
+} 
+
 
 
 onLoadData2()
 {
-this.logKeyValuePairs(this.employeeForm)
+this.logValidationErrors(this.employeeForm)
 
 }
 
