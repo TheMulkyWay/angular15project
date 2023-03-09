@@ -22,12 +22,38 @@
 </div>
 
 
+
+
+<div class="form-group">
+    <label class="col-md-2 control-label" for="contactPreference" >
+    
+    Contact Preference</label>
+   
+    <div class="col-md-8">
+    
+    <label class="radio-inline">
+    <input type="radio" value="email" id="contactPreference"    (click)="onContactPreferenceChange('email')"
+     formControlName="contactPreference">
+   
+  Email </label>
+   
+  <label class="radio-inline">
+    <input type="radio" value="phone" id="contactPreference"    (click)="onContactPreferenceChange('phone')"
+     formControlName="contactPreference">
+   
+  Phone </label>
+          
+   </div>
+   </div>
+
+
+
+<div formGroupName="emailGroup">
 <div class="form-group" [ngClass] ="{'has-error': formErrors.email}">
     <label class="col-sm-2 control-label" for="email">
         Email 📧
     </label>
     <div class="col-sm-8">
-
         <input id="email" type="text" class="form-control" formControlName="email"
         (blur)="logValidationErrors()">
         <span class="help-block" *ngIf="formErrors.email">
@@ -37,7 +63,56 @@
     </div>
 </div>
 
-<br/>
+
+
+<div class="form-group" [ngClass] ="{'has-error': formErrors.email}">
+    <label class="col-sm-2 control-label" for="confirmemail">
+       Confirm Email 📧
+    </label>
+    <div class="col-sm-8">
+        <input id="confirmemail" type="text" class="form-control" formControlName="confirmemail"
+        (blur)="logValidationErrors()">
+        <span class="help-block" *ngIf="formErrors.confirmemail">
+            {{formErrors.confirmemail}
+         </span>
+
+    </div>
+</div>
+
+</div>
+
+
+<div class="form-group" [ngClass] ="{'has-error': formErrors.phone}">
+    <label class="col-sm-2 control-label" for="phone">
+      Phone 🕾
+    </label>
+    <div class="col-sm-8">
+        <input id="phone" type="text" class="form-control" formControlName="phone"
+        (blur)="logValidationErrors()">
+           <span class="help-block" *ngIf="formErrors.email">
+            {{formErrors.email}
+         </span>
+
+    </div>
+</div>
+
+
+<div class="form-group" [ngClass] ="{'has-error': formErrors.phone}">
+    <label class="col-sm-2 control-label" for="mphone">
+      Mobile 📱
+    </label>
+    <div class="col-sm-8">
+        <input id="mphone" type="text" class="form-control" formControlName="mphone"
+        (blur)="logValidationErrors()">
+           <span class="help-block" *ngIf="formErrors.phone">
+            {{formErrors.phonel}
+         </span>
+
+    </div>
+</div>
+
+
+
 
 
 <div formGroupName="skills">
@@ -60,41 +135,52 @@
         <label class="col-sm-2 contrpl-label" for="experienceInYears">
             Experience 📚
         </label>
+            <div class="col-sm-4">
     <input type="text" placeholder="Experience in Years" formControlName="experienceInYears"
     (blur)="logValidationErrors()">
     <span class="help-block" *ngIf="formErrors.experienceInYears">
         {{formErrors.experienceInYears}
      </span>
-
+</div>
             </div>
     </div>
-<br/>
+
 
     
-    <div class="form-group"  [ngClass] ="{'has-error': formErrors.proficiency}">
-    <label class="col-md-2 control-label" for="proficiency" >Proficiency</label>
-    <div class="col-md-8">
-    <label class="radio-inline">
-    <input type="radio" value="beginner" id="proficiency"    (blur)="logValidationErrors()"
-    formControlName="proficiency">Beginner
-    </label>
+ <div class="form-group"  [ngClass] ="{'has-error': formErrors.proficiency}">
+ <label class="col-md-2 control-label" for="proficiency" >
+ 
+ Proficiency 🤯</label>
 
-    <label class="radio-inline">
-    <input type="radio" value="intermediate" id="proficiency"    (blur)="logValidationErrors()"
-    formControlName="proficiency">Intermediate
-    </label>
+ <div class="col-md-8">
+ 
+ <label class="radio-inline">
+ <input type="radio" value="beginner" id="proficiency"    
+ (blur)="logValidationErrors()"
+ formControlName="proficiency">
 
-    <label class="radio-inline">
-    <input type="radio" value="advanced" id="proficiency"    (blur)="logValidationErrors()"
-         formControlName="proficiency">Advanced
-    </label>
-    <span class="help-block" *ngIf="formErrors.experienceInYears">
-        {{formErrors.proficiency}}
-     </span>
+ Beginner  </label>
+
+<label class="radio-inline">
+<input type="radio" value="intermediate" id="proficiency"    
+(blur)="logValidationErrors()"
+ formControlName="proficiency">
     
-    </div>
-    </div>
-    </div>
+ Intermediate     </label>
+
+<label class="radio-inline">
+<input type="radio" value="advanced" id="proficiency"    
+(blur)="logValidationErrors()"
+ formControlName="proficiency">
+         
+Advanced     </label>
+<span class="help-block" *ngIf="formErrors.experienceInYears">
+{{formErrors.proficiency}}
+</span>
+    
+</div>
+</div>
+</div>
 </div>
 
 <br/>
