@@ -51,13 +51,13 @@
 <div formGroupName="emailGroup">
 <div class="form-group" [ngClass] ="{'has-error': formErrors.email}">
     <label class="col-sm-2 control-label" for="email">
-        Email 📧
+        Email 
     </label>
     <div class="col-sm-8">
         <input id="email" type="text" class="form-control" formControlName="email"
         (blur)="logValidationErrors()">
         <span class="help-block" *ngIf="formErrors.email">
-            {{formErrors.email}
+            {{formErrors.email}}
          </span>
 
     </div>
@@ -67,13 +67,13 @@
 
 <div class="form-group" [ngClass] ="{'has-error': formErrors.email}">
     <label class="col-sm-2 control-label" for="confirmemail">
-       Confirm Email 📧
+       Confirm Email 
     </label>
     <div class="col-sm-8">
         <input id="confirmemail" type="text" class="form-control" formControlName="confirmemail"
         (blur)="logValidationErrors()">
         <span class="help-block" *ngIf="formErrors.confirmemail">
-            {{formErrors.confirmemail}
+            {{formErrors.confirmemail}}
          </span>
 
     </div>
@@ -82,9 +82,12 @@
 </div>
 
 
+
+
+
 <div class="form-group" [ngClass] ="{'has-error': formErrors.phone}">
     <label class="col-sm-2 control-label" for="phone">
-      Phone 🕾
+      Phone 
     </label>
     <div class="col-sm-8">
         <input id="phone" type="text" class="form-control" formControlName="phone"
@@ -97,29 +100,21 @@
 </div>
 
 
-<div class="form-group" [ngClass] ="{'has-error': formErrors.phone}">
-    <label class="col-sm-2 control-label" for="mphone">
-      Mobile 📱
-    </label>
-    <div class="col-sm-8">
-        <input id="mphone" type="text" class="form-control" formControlName="mphone"
-        (blur)="logValidationErrors()">
-           <span class="help-block" *ngIf="formErrors.phone">
-            {{formErrors.phonel}
-         </span>
-
-    </div>
-</div>
 
 
+<div formArrayName="skills">
+<div formGroupName="0">
 
-
-
-<div formGroupName="skills">
 
 <div class="form-group" [ngClass] ="{'has-error': formErrors.skillName}">
+    
+<div class="col-sm-offset-2 col-sm-4">
+<button type="button" class="btn btn-primary" (click)="addSkillButtonClick()">Add Skill</button>
+
+</div>
+
     <label class="col-md-2 control-label" for="skillName">
-        Skill 📙
+        Skill 
     </label>
 
     <div class="col-sm-4">
@@ -133,7 +128,7 @@
     
     <div class="form-group" [ngClass] ="{'has-error': formErrors.experienceInYears}">
         <label class="col-sm-2 contrpl-label" for="experienceInYears">
-            Experience 📚
+            Experience 
         </label>
             <div class="col-sm-4">
     <input type="text" placeholder="Experience in Years" formControlName="experienceInYears"
@@ -150,7 +145,7 @@
  <div class="form-group"  [ngClass] ="{'has-error': formErrors.proficiency}">
  <label class="col-md-2 control-label" for="proficiency" >
  
- Proficiency 🤯</label>
+ Proficiency </label>
 
  <div class="col-md-8">
  
@@ -181,14 +176,19 @@ Advanced     </label>
 </div>
 </div>
 </div>
+
+</div>       <!-- end of formArrayName -->
+
 </div>
+
+
 
 <br/>
 
 <div class="panel-footer">
     
     <button class="btn btn-primary" type="submit">Save</button> &nbsp;&nbsp;&nbsp;&nbsp;
-    <button class="btn btn-primary" type="burron" (click)="onLoadData2()">Load Data</button>
+    <button class="btn btn-primary" type="button" (click)="onLoadData()">Load Data</button>
 </div>
 
 

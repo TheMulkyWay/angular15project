@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators ,AsyncValidator, AbstractControl} from '@angular/forms';
+import { FormGroup, FormBuilder, Validators ,AsyncValidator, AbstractControl, ValidatorFn, FormArray} from '@angular/forms';
 
 @Component({
   selector: 'app-create-employee',
@@ -47,37 +47,24 @@ ngOnInit() {
   this.employeeForm=this.fb.group({
     fullName: ['', Validators.required, Validators.minLength(2), Validators.maxLength(12)], 
     contactPreference: ['email'],
+
     emailGroup: this.fb.group({
     email:['', [Validators.required, this.emailDomain]],
-    confirmEmail:['', [Validators.required,]], }),
+    confirmEmail:['', [Validators.required, this.matchValues(('email'))]],   }),
+    
     phone: [''],
-    skills: this.fb.group({
-    skillName: ['',Validators.required],
-    experienceInYears: ['',Validators.required],
-    proficiency: ['', Validators.required]
-    })
+    skills: this.fb.array([this.addSkillFormGroup()])
     });
+
  
     this.employeeForm.get('contactPreferences')?.valueChanges.subscribe((data)=> { this.onContactPreferenceChange(data)});
 
-    this.employeeForm.valueChanges.subscribe((data=>{
-      this.logValidationErrors(this.employeeForm);
-    }))
-
- //   this.employeeForm.get('fullName')?.valueChanges.subscribe(value=> console.log(value));
- // this.employeeForm.valueChanges.subscribe((value: any)=> console.log(JSON.stringify(value)));
-
+    this.employeeForm.valueChanges.subscribe((data=>{    this.logValidationErrors(this.employeeForm);     }))  
     }
  
-onSubmit(){   
-  console.log(this.employeeForm.touched);
-  console.log(this.employeeForm.value);
-  console.log(this.employeeForm.controls['fullName'].touched);
-  console.log(this.employeeForm.get('fullName'));
-  console.log(this.employeeForm);
-}
 
 
+onSubmit(){     console.log(this.employeeForm.touched);  console.log(this.employeeForm.value);  console.log(this.employeeForm.controls['fullName'].touched);  console.log(this.employeeForm.get('fullName'));  console.log(this.employeeForm);}
 onLoadData(){
 
   this.employeeForm.setValue({
@@ -91,37 +78,68 @@ onLoadData(){
         });
   }
 
+// logValidationErrors(group : FormGroup=this.employeeForm) : void
+// { console.log(Object.keys(group.controls).forEach((key: string)=>
+//   {
+// const abstractControl = group.get(key);
+
+
+// this.formErrors[key]='';
+
+
+// if(abstractControl instanceof FormGroup)
+// { this.logValidationErrors(abstractControl); }
+// else { 
+// //    this.formErrors[key]=' ';
+
+
+// if(abstractControl  && !abstractControl.valid 
+//   && abstractControl.touched || abstractControl?.dirty ){
+// const messages=this.validationMessages[key];
+// //console.log(messages); console.log(abstractControl.errors);
+// for(const errorKey in abstractControl.errors)
+// if(errorKey)
+// { this.formErrors[key] +=messages[errorKey] + ' ';}
+    
+// }}
+
+
+
+//  }))
+// } 
+
 logValidationErrors(group : FormGroup=this.employeeForm) : void
-{ console.log(Object.keys(group.controls).forEach((key: string)=>
-  {
+{Object.keys(group.controls).forEach((key: string)=> {
 const abstractControl = group.get(key);
+
+
+this.formErrors[key]='';
+if(abstractControl  && !abstractControl.valid 
+  && (abstractControl.touched || abstractControl?.dirty )){
+const messages=this.validationMessages[key];
+
+
+for(const errorKey in abstractControl.errors) {
+if(errorKey) { 
+  this.formErrors[key] +=messages[errorKey] + ' ';
+	}
+        }
+      }
+
 if(abstractControl instanceof FormGroup)
 { this.logValidationErrors(abstractControl); }
-else { 
-//    this.formErrors[key]=' ';
-if(abstractControl  && !abstractControl.valid && abstractControl.touched || abstractControl?.dirty )
-{
-const messages=this.validationMessages[key];
-console.log(messages);
-console.log(abstractControl.errors);
-for(const errorKey in abstractControl.errors)
-if(errorKey){ this.formErrors[key] +=messages[errorKey] + ' ';}
-    
-}}
- }))
-} 
 
 
-
-onLoadData2()
-{
-this.logValidationErrors(this.employeeForm)
-
+if(abstractControl instanceof FormArray)  { 
+for (const control of abstractControl.controls) {
+if(control instanceof FormGroup) {
+this.logValidationErrors(control); 
+}}}}
+);
 }
 
 
 onContactPreferenceChange(selected : string){
-
   const phoneControl=this.employeeForm.get('phone');
   if(phoneControl?.value==='phone')
   {phoneControl.setValidators(Validators.required)  }
@@ -130,10 +148,6 @@ onContactPreferenceChange(selected : string){
 phoneControl?.updateValueAndValidity();
 
 }
-
-
-
-
 
 
  emailDomain(control: AbstractControl): { [key: string]: any} | null {
@@ -146,7 +160,27 @@ phoneControl?.updateValueAndValidity();
   }
   }
 
+matchValues(matchTo: string): ValidatorFn {
+    return (control: AbstractControl) => {
+      return control.value === control.parent?.get(matchTo)?.value ? null : {notMatching: true}
+    }
+   }
 
+
+   
+addSkillButtonClick() 
+{(<FormArray>this.employeeForm.get('skills')).push(this.addSkillFormGroup());
+}
+
+
+addSkillFormGroup(): FormGroup{
+  return this.fb.group({
+    skillName: ['',Validators.required],
+    experienceInYears: ['',Validators.required],
+    proficiency: ['', Validators.required]
+    })
+
+}
 
 
 }
