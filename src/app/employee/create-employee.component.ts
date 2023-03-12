@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators ,AsyncValidator, AbstractControl, ValidatorFn, FormArray} from '@angular/forms';
+import { CustomValidators } from '../reusable/custom.validators';
 
 @Component({
   selector: 'app-create-employee',
@@ -49,7 +50,7 @@ ngOnInit() {
     contactPreference: ['email'],
 
     emailGroup: this.fb.group({
-    email:['', [Validators.required, this.emailDomain]],
+    email:['', [Validators.required, CustomValidators.emailDomain]],
     confirmEmail:['', [Validators.required, this.matchValues(('email'))]],   }),
     
     phone: [''],
@@ -138,6 +139,19 @@ this.logValidationErrors(control);
 );
 }
 
+   
+addSkillButtonClick() 
+{(<FormArray>this.employeeForm.get('skills')).push(this.addSkillFormGroup());}
+
+
+addSkillFormGroup(): FormGroup{
+  return this.fb.group({
+    skillName: ['',Validators.required],
+    experienceInYears: ['',Validators.required],
+    proficiency: ['', Validators.required]
+    })
+}
+
 
 onContactPreferenceChange(selected : string){
   const phoneControl=this.employeeForm.get('phone');
@@ -150,15 +164,7 @@ phoneControl?.updateValueAndValidity();
 }
 
 
- emailDomain(control: AbstractControl): { [key: string]: any} | null {
-  const email: string=control.value;
-  const domain= email.substring(email.lastIndexOf('@') + 1);
-  if(domain.toLowerCase()==='keycost.com') {
-  return null;
-  }
-  else{ return { 'emailDomain' : true};
-  }
-  }
+
 
 matchValues(matchTo: string): ValidatorFn {
     return (control: AbstractControl) => {
@@ -166,21 +172,6 @@ matchValues(matchTo: string): ValidatorFn {
     }
    }
 
-
-   
-addSkillButtonClick() 
-{(<FormArray>this.employeeForm.get('skills')).push(this.addSkillFormGroup());
-}
-
-
-addSkillFormGroup(): FormGroup{
-  return this.fb.group({
-    skillName: ['',Validators.required],
-    experienceInYears: ['',Validators.required],
-    proficiency: ['', Validators.required]
-    })
-
-}
 
 
 }
