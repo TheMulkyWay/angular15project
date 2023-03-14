@@ -18,6 +18,7 @@ validationMessages : any ={
   'minlength' :'Must be more than 2 characters', 
   'maxlength': 'must be less than 24'
 },
+
   'email':{
   'required':'Email is reqiured.',
   'emailDomain': 'Email domain should be keycost.com'
@@ -25,6 +26,8 @@ validationMessages : any ={
 'confirmEmail':{
   'required':'Confirm Email is reqiured.'
   },
+'emailGroup': {'emailMismatch': 'Email and confirm email do not match'},
+
 'phone':{
   'required':'Phone is reqiured.'
 },
@@ -37,7 +40,8 @@ validationMessages : any ={
     'fullName':'',
     'email': '',
     'confirmEmail': '',
-    'skillName': '',
+    'emailGroup': '',
+      'skillName': '',
     'experienceInYears': '',
     'proficiency': ''
     };
@@ -45,27 +49,43 @@ validationMessages : any ={
 constructor(private fb: FormBuilder) {}
 
 ngOnInit() {
+  this.initialiseFormControls();
+
+  this.employeeForm.get('contactPreferences')?.valueChanges.subscribe((data)=> { this.onContactPreferenceChange(data)});
+
+  this.employeeForm.valueChanges.subscribe((data=>{    this.logValidationErrors(this.employeeForm);     }))  
+    }
+ 
+
+
+
+
+initialiseFormControls(){
   this.employeeForm=this.fb.group({
     fullName: ['', Validators.required, Validators.minLength(2), Validators.maxLength(12)], 
     contactPreference: ['email'],
 
     emailGroup: this.fb.group({
-    email:['', [Validators.required, CustomValidators.emailDomain]],
+    email:['', [Validators.required, CustomValidators.emailDomain('dell.com')]],
     confirmEmail:['', [Validators.required, this.matchValues(('email'))]],   }),
     
     phone: [''],
     skills: this.fb.array([this.addSkillFormGroup()])
     });
 
- 
-    this.employeeForm.get('contactPreferences')?.valueChanges.subscribe((data)=> { this.onContactPreferenceChange(data)});
 
-    this.employeeForm.valueChanges.subscribe((data=>{    this.logValidationErrors(this.employeeForm);     }))  
-    }
- 
+}
 
 
-onSubmit(){     console.log(this.employeeForm.touched);  console.log(this.employeeForm.value);  console.log(this.employeeForm.controls['fullName'].touched);  console.log(this.employeeForm.get('fullName'));  console.log(this.employeeForm);}
+
+
+
+onSubmit()
+{                    console.log(this.employeeForm.touched);  console.log(this.employeeForm.value);  console.log(this.employeeForm.controls['fullName'].touched);  
+                      console.log(this.employeeForm.get('fullName'));  
+                      console.log(this.employeeForm);
+}
+
 onLoadData(){
 
   this.employeeForm.setValue({
@@ -141,7 +161,8 @@ this.logValidationErrors(control);
 
    
 addSkillButtonClick() 
-{(<FormArray>this.employeeForm.get('skills')).push(this.addSkillFormGroup());}
+{(<FormArray>this.employeeForm.get('skills')).push(this.addSkillFormGroup());
+}
 
 
 addSkillFormGroup(): FormGroup{
@@ -164,14 +185,21 @@ phoneControl?.updateValueAndValidity();
 }
 
 
-
-
 matchValues(matchTo: string): ValidatorFn {
     return (control: AbstractControl) => {
       return control.value === control.parent?.get(matchTo)?.value ? null : {notMatching: true}
     }
    }
 
+
+matchEmail(group : AbstractControl) :{ [key: string]: any}  | null {
+const emailControl=group.get('email');
+const confirmEmailControl = group.get('confirmEmail');
+if (emailControl?.value===confirmEmailControl?.value  || confirmEmailControl?.pristine)
+{return null;}
+else{return {'emailMismatch': true};
+} 
+}
 
 
 }
