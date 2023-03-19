@@ -4,213 +4,264 @@
 <form class="form-horizontal" [formGroup]='employeeForm' (ngSubmit)="onSubmit()" autocomplete="off">
 <div class="panel panel-primary">
 <h3 class="panel-title">Create Employee</h3>
-
-
 </div>
 
 <div class="panel-body">
 
-<div class="form-group" [ngClass] ="{'has-error': formErrors.fullName}">
-<label class="col-sm-2 control-label" for="fullName">Full Name</label>
-<div class="col-sm-8">
-    <input id="fullName" formControlName="fullName" type="text" class="form-control"
-    (blur)="logValidationErrors()">
-    <span class="help-block" *ngIf="formErrors.fullName">
-   {{formErrors.fullName}
-</span>
-</div>
-</div>
+  <!--
+   fullName Form Fields
+    a nested form group
+    of form controls
+    enabling on demand
+    multiple copies
+
+
+    -->
+
+  <div class="form-group" [ngClass]="{'has-error': formErrors.fullName}">
+    <label class="col-sm-2 control-label" for="fullName">Full Name</label>
+    <div class="col-sm-8">
+      <input id="fullName" formControlName="fullName" type="text" class="form-control w"
+             (blur)="logValidationErrors()">
+      <span class="help-block" *ngIf="formErrors.fullName">
+        {{formErrors.fullName}}
+      </span>
+    </div>
+  </div>
 
 
 
+  <!--
+    contactPreference
+    Form Field
+    form control of type
+    array enabled
 
-<div class="form-group">
-    <label class="col-md-2 control-label" for="contactPreference" >
-    
-    Contact Preference</label>
-   
+    -->
+
+  <div class="form-group">
     <div class="col-md-8">
-    
-    <label class="radio-inline">
-    <input type="radio" value="email" id="contactPreference"    (click)="onContactPreferenceChange('email')"
-     formControlName="contactPreference">
-   
-  Email </label>
-   
-  <label class="radio-inline">
-    <input type="radio" value="phone" id="contactPreference"    (click)="onContactPreferenceChange('phone')"
-     formControlName="contactPreference">
-   
-  Phone </label>
-          
-   </div>
-   </div>
+
+      <label class="col-md-2 control-label" for="contactPreference">
+
+        Contact Preference
+      </label>
+
+
+      <label class="radio-inline">
+        <input type="radio" value="email" id="contactPreference" (click)="onContactPreferenceChange('email')"
+               formControlName="contactPreference">
+
+        Email
+      </label>
+
+      <label class="radio-inline">
+        <input type="radio" value="phone" id="contactPreference" (click)="onContactPreferenceChange('phone')"
+               formControlName="contactPreference">
+
+        Phone
+      </label>
+
+    </div>
+  </div>
 
 
 
-<div formGroupName="emailGroup">
-<div class="form-group" [ngClass] ="{'has-error': formErrors.email}">
-    <label class="col-sm-2 control-label" for="email">
-        Email 
-    </label>
-    <div class="col-sm-8">
-        <input id="email" type="text" class="form-control" formControlName="email"
-        (blur)="logValidationErrors()">
+  <!--
+   emailGroup
+  2  Form Field
+   form control of type
+   input text email
+     and confirmEmail
+
+   -->
+
+
+  <div formGroupName="emailGroup">
+
+    <div class="form-group" [ngClass]="{'has-error': formErrors.email}">
+      <label class="col-sm-2 control-label" for="email">
+        Email
+      </label>
+      <div class="col-sm-8">
+        <input id="email" type="text" class="form-control w" formControlName="email"
+               (blur)="logValidationErrors()">
         <span class="help-block" *ngIf="formErrors.email">
-            {{formErrors.email}}
-         </span>
+          {{formErrors.email}}
+        </span>
 
+      </div>
     </div>
-</div>
 
 
 
-<div class="form-group" [ngClass] ="{'has-error': formErrors.confirmemail || formErrors.emailGroup}">
-    <label class="col-sm-2 control-label" for="confirmemail">
-       Confirm Email 
-    </label>
-    <div class="col-sm-8">
-        <input id="confirmemail" type="text" class="form-control" formControlName="confirmemail"
-        (blur)="logValidationErrors()">
+    <div class="form-group" [ngClass]="{'has-error': formErrors.confirmemail || formErrors.emailGroup}">
+      <label class="col-sm-2 control-label" for="confirmemail">
+        Confirm Email
+      </label>
+      <div class="col-sm-8">
+        <input id="confirmemail" type="text" class="form-control w" formControlName="confirmemail"
+               (blur)="logValidationErrors()">
         <span class="help-block" *ngIf="formErrors.confirmemail  || formErrors.emailGroup">
-            {{formErrors.confirmEmail ?  formErrors.confirmEmail : formErrors.emailGroup }}
-       
-         </span> 
+          {{formErrors.confirmEmail ?  formErrors.confirmEmail : formErrors.emailGroup }}
 
+        </span>
+
+      </div>
     </div>
-</div>
 
-</div>
-
+  </div>
 
 
 
 
-<div class="form-group" [ngClass] ="{'has-error': formErrors.phone}">
+
+  <div class="form-group" [ngClass]="{'has-error': formErrors.phone}">
     <label class="col-sm-2 control-label" for="phone">
-      Phone 
+      Phone
     </label>
     <div class="col-sm-8">
-        <input id="phone" type="text" class="form-control" formControlName="phone"
-        (blur)="logValidationErrors()">
-           <span class="help-block" *ngIf="formErrors.email">
-            {{formErrors.email}
-         </span>
+      <input id="phone" type="text" class="form-control w" formControlName="phone"
+             (blur)="logValidationErrors()">
+      <span class="help-block" *ngIf="formErrors.email">
+        {{formErrors.email}}
+      </span>
 
     </div>
-</div>
+  </div>
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div class="well">
-
-<div formArrayName="skills"  >
-<div formGroupName="0" *ngfor="let skill of employeeForm.get('skills').controls">
-
-<div class="col-sm-offset-2 col-sm-4">
-<button type="button" class="btn btn-primary" (click)="addSkillButtonClick()">Add Skill</button>
-</div>
-
-
-<div class="form-group" [ngClass] ="{'has-error': formErrors.skillName}">
-    <label class="col-md-2 control-label" for="skillName">
-        Skill 
-    </label>
-
-    <div class="col-sm-4">
-    <input type="text" id="skillName" formControlName="skillName" placeholder="C#, Angular, .Net Core etc...."
-    (blur)="logValidationErrors()">
-    <span class="help-block" *ngIf="formErrors.skillName">
-        {{formErrors.skillName}
-     </span>
-    </div></div>
-    
-
-<div class="form-group" [ngClass] ="{'has-error': formErrors.experienceInYears}">
-        <label class="col-sm-2 contrpl-label" for="experienceInYears">
-            Experience 
+  <div class="form-group row mb-2">
+    <div class="col-md-8">
+      <div class="form-check">
+        <label class="form-check-label">
+          <input class="form-check-input"
+                 id="showSkillsId"
+                 type="checkbox"
+                 formControlName="showSkills">Show your skills
         </label>
+      </div>
+    </div>
+  </div>
+
+
+
+
+  <!--  ▒  ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒-->
+
+  <div *ngIf="employeeForm.get('showSkills')?.value">
+      <div formArrayName="skills" >
+
+
+        <div class="col-sm-offset-2 col-sm-4">
+          <button type="button"
+                  class="btn btn-primary"
+                  (click)="addSkillButtonClick()">
+      
+          Add Skill
+          </button>
+        </div>
+
+
+
+
+        <div [formGroupName]="i" *ngFor="let skill of skills.controls; let i=index"  >
+
+
+          <div class="form-group" [ngClass]="{'has-error': formErrors.skillName}">
+            <label class="col-md-2 control-label" for="skillName">
+              Skill
+            </label>
+
             <div class="col-sm-4">
-    <input type="text" placeholder="Experience in Years" formControlName="experienceInYears"
-    (blur)="logValidationErrors()">
-    <span class="help-block" *ngIf="formErrors.experienceInYears">
-        {{formErrors.experienceInYears}
-     </span>
+              <input type="text" id="skillName"
+                     formControlName="skillName"
+                     placeholder="C#, Angular, .Net Core etc...."
+                     (blur)="logValidationErrors()">
+
+              <span class="help-block" *ngIf="formErrors.skillName">
+                {{formErrors.skillName}}
+              </span>
+            </div>
+          </div>
+
+
+          <div class="form-group" [ngClass]="{'has-error': formErrors.experienceInYears}">
+            <label class="col-sm-2 contrpl-label" for="experienceInYears">
+              Experience
+            </label>
+            <div class="col-sm-4">
+              <input type="text" placeholder="Experience in Years" formControlName="experienceInYears"
+                     (blur)="logValidationErrors()">
+              <span class="help-block" *ngIf="formErrors.experienceInYears">
+                {{formErrors.experienceInYears}}
+              </span>
+            </div>
+          </div>
+
+
+          
+          
+          
+          <div class="form-group" [ngClass]="{'has-error': formErrors.proficiency}">
+
+            <div class="col-md-8">
+              <label class="col-md-2 control-label p" for="proficiency">
+
+                Proficiency
+
+              </label>
+
+
+
+              <label class="radio-inline">
+                <input type="radio" value="beginner" id="proficiency"
+                       (blur)="logValidationErrors()"
+                       formControlName="proficiency">
+
+                Beginner
+
+              </label>
+              <label class="radio-inline">
+                <input type="radio" value="intermediate" id="proficiency"
+                       (blur)="logValidationErrors()"
+                       formControlName="proficiency">
+
+                Intermediate
+
+              </label>
+              <label class="radio-inline">
+                <input type="radio" value="advanced" id="proficiency"
+                       (blur)="logValidationErrors()"
+                       formControlName="proficiency">
+
+                Advanced
+
+              </label>
+              <span class="help-block" *ngIf="formErrors.experienceInYears">
+                {{formErrors.proficiency}}
+              </span>
+
+            </div>
+          </div>
+
+
+        </div>
+      </div>    <!-- end of formArrayName -->
+    </div>
+     
+
+
+
+
+
+
+
 </div>
-</div>
-    
 
 
 
 
-    
- <div class="form-group"  [ngClass] ="{'has-error': formErrors.proficiency}">
- <label class="col-md-2 control-label" for="proficiency" >
- 
- Proficiency </label>
-
- <div class="col-md-8">
- 
- <label class="radio-inline">
- <input type="radio" value="beginner" id="proficiency"    
- (blur)="logValidationErrors()"
- formControlName="proficiency">
-
- Beginner  </label>
-
-<label class="radio-inline">
-<input type="radio" value="intermediate" id="proficiency"    
-(blur)="logValidationErrors()"
- formControlName="proficiency">
-    
- Intermediate     </label>
-
-<label class="radio-inline">
-<input type="radio" value="advanced" id="proficiency"    
-(blur)="logValidationErrors()"
- formControlName="proficiency">
-         
-Advanced     </label>
-<span class="help-block" *ngIf="formErrors.experienceInYears">
-{{formErrors.proficiency}}
-</span>
-    
-</div>
-</div>
-
-
-</div>
-
-</div>
-
-
-</div>       <!-- end of formArrayName -->
-
-</div>
-
-
-
-<br/>
 
 <div class="panel-footer">
     
@@ -222,9 +273,9 @@ Advanced     </label>
 </form>
 
 
-<br/>
 
-<table>
+
+<table style=" float: right; width: 60%; float: top; margin-top:-300px; background-color:darksalmon; margin-right:50px">
     <tr>
     <th style="padding: 10px">FormGroup</th>
     <th style="padding: 10px">FormControl (fullName)</th>

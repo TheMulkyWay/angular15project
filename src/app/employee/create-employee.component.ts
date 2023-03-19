@@ -9,11 +9,10 @@ import { CustomValidators } from '../reusable/custom.validators';
 })
 export class CreateEmployeeComponent  implements OnInit{
 
-public employeeForm!: FormGroup;
-
-
-validationMessages : any ={
-  'fullname':{ 
+  public employeeForm!: FormGroup;
+   
+  validationMessages : any ={
+  'fullName':{ 
   'required': 'Full Name is required', 
   'minlength' :'Must be more than 2 characters', 
   'maxlength': 'must be less than 24'
@@ -34,7 +33,7 @@ validationMessages : any ={
 'skillName': { required: 'Skill Name is required.', },
   'experinceInYears': {'required': 'Experience is required. ',},
   'proficiency': {'required' : 'Proficiency is required.',},
-  };
+                                                };
 
   formErrors: any={
     'fullName':'',
@@ -44,22 +43,19 @@ validationMessages : any ={
       'skillName': '',
     'experienceInYears': '',
     'proficiency': ''
-    };
+                                  };
 
-constructor(private fb: FormBuilder) {}
+get skills(): FormArray {  return <FormArray>this.employeeForm.get('skills'); }
+
+                                  
+ constructor(private fb: FormBuilder) {}
 
 ngOnInit() {
   this.initialiseFormControls();
-
   this.employeeForm.get('contactPreferences')?.valueChanges.subscribe((data)=> { this.onContactPreferenceChange(data)});
-
   this.employeeForm.valueChanges.subscribe((data=>{    this.logValidationErrors(this.employeeForm);     }))  
     }
  
-
-
-
-
 initialiseFormControls(){
   this.employeeForm=this.fb.group({
     fullName: ['', Validators.required, Validators.minLength(2), Validators.maxLength(12)], 
@@ -70,15 +66,12 @@ initialiseFormControls(){
     confirmEmail:['', [Validators.required, this.matchValues(('email'))]],   }),
     
     phone: [''],
+    showSkills: true,
     skills: this.fb.array([this.addSkillFormGroup()])
     });
 
 
 }
-
-
-
-
 
 onSubmit()
 {                    console.log(this.employeeForm.touched);  console.log(this.employeeForm.value);  console.log(this.employeeForm.controls['fullName'].touched);  
@@ -87,8 +80,7 @@ onSubmit()
 }
 
 onLoadData(){
-
-  this.employeeForm.setValue({
+    this.employeeForm.setValue({
     fullName: 'MulkyWay Tech',
     email : 'mulkyway@gmail.com',
     skills: {
@@ -98,36 +90,6 @@ onLoadData(){
     }
         });
   }
-
-// logValidationErrors(group : FormGroup=this.employeeForm) : void
-// { console.log(Object.keys(group.controls).forEach((key: string)=>
-//   {
-// const abstractControl = group.get(key);
-
-
-// this.formErrors[key]='';
-
-
-// if(abstractControl instanceof FormGroup)
-// { this.logValidationErrors(abstractControl); }
-// else { 
-// //    this.formErrors[key]=' ';
-
-
-// if(abstractControl  && !abstractControl.valid 
-//   && abstractControl.touched || abstractControl?.dirty ){
-// const messages=this.validationMessages[key];
-// //console.log(messages); console.log(abstractControl.errors);
-// for(const errorKey in abstractControl.errors)
-// if(errorKey)
-// { this.formErrors[key] +=messages[errorKey] + ' ';}
-    
-// }}
-
-
-
-//  }))
-// } 
 
 logValidationErrors(group : FormGroup=this.employeeForm) : void
 {Object.keys(group.controls).forEach((key: string)=> {
@@ -158,12 +120,10 @@ this.logValidationErrors(control);
 }}}}
 );
 }
-
    
 addSkillButtonClick() 
 {(<FormArray>this.employeeForm.get('skills')).push(this.addSkillFormGroup());
 }
-
 
 addSkillFormGroup(): FormGroup{
   return this.fb.group({
@@ -172,7 +132,6 @@ addSkillFormGroup(): FormGroup{
     proficiency: ['', Validators.required]
     })
 }
-
 
 onContactPreferenceChange(selected : string){
   const phoneControl=this.employeeForm.get('phone');
@@ -184,13 +143,11 @@ phoneControl?.updateValueAndValidity();
 
 }
 
-
 matchValues(matchTo: string): ValidatorFn {
     return (control: AbstractControl) => {
       return control.value === control.parent?.get(matchTo)?.value ? null : {notMatching: true}
     }
    }
-
 
 matchEmail(group : AbstractControl) :{ [key: string]: any}  | null {
 const emailControl=group.get('email');
@@ -200,6 +157,5 @@ if (emailControl?.value===confirmEmailControl?.value  || confirmEmailControl?.pr
 else{return {'emailMismatch': true};
 } 
 }
-
 
 }
