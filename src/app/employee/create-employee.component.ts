@@ -113,11 +113,7 @@ if(abstractControl instanceof FormGroup)
 { this.logValidationErrors(abstractControl); }
 
 
-if(abstractControl instanceof FormArray)  { 
-for (const control of abstractControl.controls) {
-if(control instanceof FormGroup) {
-this.logValidationErrors(control); 
-}}}}
+}
 );
 }
    

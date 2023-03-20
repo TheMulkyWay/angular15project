@@ -16,3 +16,9 @@ width:50%;
 padding-top: 20px;
     
   }
+
+  hr
+  {
+border-style: solid 1px silver;
+
+  }

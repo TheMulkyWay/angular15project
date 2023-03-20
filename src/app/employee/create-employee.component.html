@@ -156,8 +156,8 @@
         <div class="col-sm-offset-2 col-sm-4">
           <button type="button"
                   class="btn btn-primary"
-                  (click)="addSkillButtonClick()">
-      
+                  (click)="addSkillButtonClick()"
+                  [disabled]="employeeForm.get('skills')?.invalid">      
           Add Skill
           </button>
         </div>
@@ -167,34 +167,34 @@
 
         <div [formGroupName]="i" *ngFor="let skill of skills.controls; let i=index"  >
 
-
-          <div class="form-group" [ngClass]="{'has-error': formErrors.skillName}">
-            <label class="col-md-2 control-label" for="skillName">
+<hr *ngIf="i>0">
+          <div class="form-group" [ngClass]="{'has-error': skill.get('skillName')?.invalid && skill.get('skillName')?.touched}">
+            <label class="col-sm-2 control-label" [attr.for]="'skillName'+i">
               Skill
             </label>
 
             <div class="col-sm-4">
-              <input type="text" id="skillName"
+              <input type="text" class="form-control" id="'skillName'+i"
                      formControlName="skillName"
                      placeholder="C#, Angular, .Net Core etc...."
-                     (blur)="logValidationErrors()">
+                  >
 
-              <span class="help-block" *ngIf="formErrors.skillName">
-                {{formErrors.skillName}}
+              <span class="help-block" *ngIf="skill.get('skillName')?.errors && skill.get('skillName')?.touched">
+ Skilly Name is required
               </span>
             </div>
           </div>
 
 
-          <div class="form-group" [ngClass]="{'has-error': formErrors.experienceInYears}">
-            <label class="col-sm-2 contrpl-label" for="experienceInYears">
+          <div class="form-group" [ngClass]="{'has-error': skill.get('experienceInYears')?.invalid && skill.get('experienceInYears')?.touched}">
+            <label class="col-sm-2 contrpl-label" [attr.for]="'experienceInYears' +i">
               Experience
             </label>
             <div class="col-sm-4">
               <input type="text" placeholder="Experience in Years" formControlName="experienceInYears"
                      (blur)="logValidationErrors()">
-              <span class="help-block" *ngIf="formErrors.experienceInYears">
-                {{formErrors.experienceInYears}}
+              <span class="help-block" *ngIf="skill.get('experienceInYears')?.errors && skill.get('experienceInYears')?.touched">
+              Experience is Required
               </span>
             </div>
           </div>
@@ -203,7 +203,7 @@
           
           
           
-          <div class="form-group" [ngClass]="{'has-error': formErrors.proficiency}">
+          <div class="form-group" [ngClass]="{'has-error':  skill.get('proficiency')?.invalid && skill.get('proficiency')?.touched  }">
 
             <div class="col-md-8">
               <label class="col-md-2 control-label p" for="proficiency">
@@ -238,8 +238,8 @@
                 Advanced
 
               </label>
-              <span class="help-block" *ngIf="formErrors.experienceInYears">
-                {{formErrors.proficiency}}
+              <span class="help-block" *ngIf="skill.get('experienceInYears')?.errors && skill.get('experienceInYears')?.touched">
+                Proficiency is Required
               </span>
 
             </div>
@@ -275,7 +275,7 @@
 
 
 
-<table style=" float: right; width: 60%; float: top; margin-top:-300px; background-color:darksalmon; margin-right:50px">
+<table style=" float: right; width: 50%; float: top; margin-top:-300px; background-color:darksalmon; margin-right:50px; font-size: small;">
     <tr>
     <th style="padding: 10px">FormGroup</th>
     <th style="padding: 10px">FormControl (fullName)</th>
