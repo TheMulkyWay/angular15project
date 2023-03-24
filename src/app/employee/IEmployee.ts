@@ -6,7 +6,7 @@ export interface IEmployee {
 id: number;
 fullName: string;
 email: string;
-phone?: number;
+phone?: string;
 contactPreference: string;
 skills : ISkill[];
 }

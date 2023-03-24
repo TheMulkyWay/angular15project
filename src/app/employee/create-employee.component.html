@@ -173,6 +173,17 @@
               Skill
             </label>
 
+
+            <div *ngIf="skills.length >1">
+            <button type="button" class="btn btn-danger btn-sm"   
+                        style="position:relative; right:-200px; background-color: coral;border-width: 0;" 
+                        title="Delete Skill" 
+                        (click)="removeSkillButtonClick(i)">
+              <span class="fa fa-times" style="float:right">X</span>
+            </button>
+            </div>
+
+
             <div class="col-sm-4">
               <input type="text" class="form-control" id="'skillName'+i"
                      formControlName="skillName"
@@ -196,6 +207,11 @@
               <span class="help-block" *ngIf="skill.get('experienceInYears')?.errors && skill.get('experienceInYears')?.touched">
               Experience is Required
               </span>
+            </div>
+            <div class="col-sm-6">
+
+
+
             </div>
           </div>
 

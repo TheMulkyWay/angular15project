@@ -8,6 +8,7 @@ import { CreateEmployeeComponent } from './employee/create-employee.component';
 import { AppRoutingModule } from './app-routing.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TextInputComponent } from './reusable/text-input/text-input.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 
 
@@ -24,6 +25,7 @@ import { TextInputComponent } from './reusable/text-input/text-input.component';
     BrowserAnimationsModule,
     ReactiveFormsModule,
     AppRoutingModule,
+    FontAwesomeModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

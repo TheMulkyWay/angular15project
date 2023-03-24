@@ -10,7 +10,9 @@ import { CustomValidators } from '../reusable/custom.validators';
 export class CreateEmployeeComponent  implements OnInit{
 
   public employeeForm!: FormGroup;
-   
+
+
+
   validationMessages : any ={
   'fullName':{ 
   'required': 'Full Name is required', 
@@ -74,7 +76,8 @@ initialiseFormControls(){
 }
 
 onSubmit()
-{                    console.log(this.employeeForm.touched);  console.log(this.employeeForm.value);  console.log(this.employeeForm.controls['fullName'].touched);  
+{                    console.log(this.employeeForm.touched);  console.log(this.employeeForm.value);  
+                      console.log(this.employeeForm.controls['fullName'].touched);  
                       console.log(this.employeeForm.get('fullName'));  
                       console.log(this.employeeForm);
 }
@@ -119,7 +122,17 @@ if(abstractControl instanceof FormGroup)
    
 addSkillButtonClick() 
 {(<FormArray>this.employeeForm.get('skills')).push(this.addSkillFormGroup());
+
 }
+
+
+removeSkillButtonClick(skillGroupIndex: number): void{
+  (<FormArray>this.employeeForm.get('skills')).removeAt(skillGroupIndex);
+
+}
+
+
+
 
 addSkillFormGroup(): FormGroup{
   return this.fb.group({
