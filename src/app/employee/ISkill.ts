@@ -1,7 +1,7 @@
 
 export interface ISkill {
     skilName: string;
-    experienceInYears: number;
+    experienceInYears: string | number;
     proficiency: string;
     }
     

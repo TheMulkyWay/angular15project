@@ -9,12 +9,12 @@ import { IEmployee } from './IEmployee';
 })
 export class EmployeeService{
 
-private employeesUrl='api/employees';
+private employeesUrlOrig='api/employees';
+private employeesUrl='http://localhost:3000/employees';
 
 constructor(private http: HttpClient){}
 
-
-getIEmployees(): Observable<IEmployee[]> {
+getEmployees(): Observable<IEmployee[]> {
     return this.http.get<IEmployee[]>(this.employeesUrl)
       .pipe(
         tap(data => console.log(JSON.stringify(data))),
@@ -22,7 +22,13 @@ getIEmployees(): Observable<IEmployee[]> {
       );
   }
 
-  getIEmployee(id: number): Observable<IEmployee> {
+
+  getEmployees2(): Observable<IEmployee[]>{ 
+    return this.http.get<IEmployee[]>(this.employeesUrl);}
+
+
+
+  getEmployee(id: number): Observable<IEmployee> {
     if (id === 0) {
       return of(this.initializeEmployee());
     }

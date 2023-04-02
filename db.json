@@ -1,0 +1,91 @@
+{
+    "employees": [
+        {
+                "id" : 1,
+                "fullName": "Mathew",
+                "contactPreference": "email",
+                "email": "marl@email.com",
+                "phone": "5434343223",
+                "skills": [
+
+                    {   "skillName": "C#",
+                    "experienceInYears": "1",
+                    "proficiency": "beginner"
+                    },
+                    {   "skillName": "VB",
+                        "experienceInYears": "2",
+                        "proficiency": "beginner"
+                    } ] 
+               },
+                {
+                    "id" : 2,
+                    "fullName": "Marl",
+                    "contactPreference": "email",
+                    "email": "markos@email.com",
+                    "phone": "8887776113",
+                    "skills": [
+    
+                        {   "skillName": "Java",
+                        "experienceInYears": "2",
+                        "proficiency": "beginner"
+                        },
+                        {   "skillName": "F#",
+                            "experienceInYears": "2",
+                            "proficiency": "beginner"
+                        } ]
+                    },
+                      {
+                        "id" : 3,
+                        "fullName": "Melisa",
+                        "contactPreference": "phonel",
+                        "email": "me@email.com",
+                        "phone": "6666666613",
+                        "skills": [
+        
+                            {"skillName": "SVG",
+                            "experienceInYears": "2",
+                            "proficiency": "intermediate"
+                            },
+                            {   "skillName": "PhotoShop",
+                                "experienceInYears": "3",
+                                "proficiency": "beginner"
+                            } ]
+                        },
+                        {
+                            "id" : 4,
+                            "fullName": "John",
+                            "contactPreference": "phone",
+                            "email": "john@email.com",
+                            "phone": "642424548",
+                            "skills": [
+                              {   "skillName": "SVG",
+                                "experienceInYears": "1",
+                                "proficiency": "intermediate"
+                                },
+                                {   "skillName": "SQL Server",
+                                    "experienceInYears": "12",
+                                    "proficiency": "intermediate"
+                                },
+                                {   "skillName": "C#",
+                                    "experienceInYears": "12",
+                                    "proficiency": "intermediate"
+                                },
+                                {   "skillName": "Angular",
+                                    "experienceInYears": "5",
+                                    "proficiency": "intermediate"
+                                }] 
+                            },
+                            {
+                                "id" :5,
+                                "fullName": "James",
+                                "contactPreference": "phone",
+                                "email": "james@email.com",
+                                "phone": "23232348",
+                                "skills": [
+                                 {   "skillName": "Angular",
+                                    "experienceInYears": "1",
+                                    "proficiency": "beginner"
+                                    } ] 
+                               }
+                     ]
+                }
